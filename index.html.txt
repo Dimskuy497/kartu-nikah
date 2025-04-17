@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kartu Nikah Digital</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { padding: 30px; font-family: 'Poppins', sans-serif; }
+    img { max-width: 200px; border-radius: 10px; margin-bottom: 20px; }
+    hr { margin: 20px 0; }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #output, #output * {
+        visibility: visible;
+      }
+      #output {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="mb-4">INFORMASI QRCODE</h2>
+
+  <div class="mb-3">
+    <label for="fotoInput" class="form-label">Foto Suami/Istri</label><br>
+    <input type="file" id="fotoInput" accept="image/*" class="form-control">
+    <img id="previewFoto" src="" alt="Foto akan muncul di sini" />
+  </div>
+
+  <div class="mb-3">
+    <label for="namaSuami">Nama Suami</label>
+    <input type="text" id="namaSuami" class="form-control" value="AHMAD FAKHRUDIN">
+  </div>
+
+  <div class="mb-3">
+    <label for="nikSuami">NIK Suami</label>
+    <input type="text" id="nikSuami" class="form-control" value="1806111605940005">
+  </div>
+
+  <hr>
+
+  <div class="mb-3">
+    <label for="namaIstri">Nama Istri</label>
+    <input type="text" id="namaIstri" class="form-control" value="NOR KHANIF FIRHATINA">
+  </div>
+
+  <div class="mb-3">
+    <label for="nikIstri">NIK Istri</label>
+    <input type="text" id="nikIstri" class="form-control" value="3320064510000001">
+  </div>
+
+  <hr>
+
+  <div class="mb-3">
+    <label for="namaWali">Nama Wali</label>
+    <input type="text" id="namaWali" class="form-control" value="SYAHRUL MUNIR, S.AG., M.PD.I">
+  </div>
+
+  <div class="mb-3">
+    <label for="lokasi">Lokasi Akad</label>
+    <input type="text" id="lokasi" class="form-control" value="DILUAR KUA">
+  </div>
+
+  <div class="mb-3">
+    <label for="tanggalAkad">Jam dan Tanggal Akad</label>
+    <input type="text" id="tanggalAkad" class="form-control" value="Pukul 09:00 , Tanggal 25 - 02 - 2025 / 26 Syaban 1446">
+  </div>
+
+  <div class="mb-3">
+    <label for="alamat">Alamat Lokasi Akad</label>
+    <input type="text" id="alamat" class="form-control" value="GUNUNG KASIH PUGUNG TANGGAMUS">
+  </div>
+
+  <button class="btn btn-primary me-2" onclick="generateCard()">Tampilkan Data</button>
+  <button class="btn btn-success" onclick="window.print()">Cetak Kartu Nikah</button>
+
+  <div class="mt-5" id="output">
+    <!-- Output area -->
+  </div>
+</div>
+
+<script>
+  document.getElementById('fotoInput').addEventListener('change', function (e) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      document.getElementById('previewFoto').src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  });
+
+  function generateCard() {
+    const namaSuami = document.getElementById('namaSuami').value;
+    const nikSuami = document.getElementById('nikSuami').value;
+    const namaIstri = document.getElementById('namaIstri').value;
+    const nikIstri = document.getElementById('nikIstri').value;
+    const namaWali = document.getElementById('namaWali').value;
+    const lokasi = document.getElementById('lokasi').value;
+    const tanggalAkad = document.getElementById('tanggalAkad').value;
+    const alamat = document.getElementById('alamat').value;
+    const foto = document.getElementById('previewFoto').src;
+
+    document.getElementById('output').innerHTML = `
+      <div class="card p-4">
+        <h4 class="text-center">KARTU NIKAH DIGITAL</h4>
+        <img src="${foto}" alt="Foto Pasangan" class="mx-auto d-block mb-3"/>
+        <p><strong>Nama Suami:</strong> ${namaSuami}</p>
+        <p><strong>NIK Suami:</strong> ${nikSuami}</p>
+        <p><strong>Nama Istri:</strong> ${namaIstri}</p>
+        <p><strong>NIK Istri:</strong> ${nikIstri}</p>
+        <p><strong>Nama Wali:</strong> ${namaWali}</p>
+        <p><strong>Lokasi Akad:</strong> ${lokasi}</p>
+        <p><strong>Tanggal & Jam Akad:</strong> ${tanggalAkad}</p>
+        <p><strong>Alamat:</strong> ${alamat}</p>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
